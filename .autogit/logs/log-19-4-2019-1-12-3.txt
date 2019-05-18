@@ -1,0 +1,20 @@
+-------------------- Auto-Git Log --------------------
+		Sun May 19 2019 01:12:03 GMT+0530 (IST)
+------------------------------------------------------
+
+Modified files:
+* src/App.js
+
+
+Created files:
+* src/Components/Card.js
+* src/Components/Header.js
+* src/Components/MainContent.js
+* src/Components/Pagination.js
+* src/Dashboard.js
+
+
+Deleted files:
+
+
+Renamed files:
