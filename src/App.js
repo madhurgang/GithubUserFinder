@@ -10,7 +10,9 @@ class App extends React.Component {
     term: '',
     searchResult: '',
     totalCount: 0,
-    totalPages: 0
+    totalPages: 0,
+    pageSize: 30,
+    currentPage: 1
   }
 
   handleSearchChange = (e) => {
@@ -51,10 +53,28 @@ class App extends React.Component {
             <Dashboard
               searchResult={this.state.searchResult}
               totalCount={this.state.totalCount}
-              totalPages={this.state.totalPages} />/>
+              totalPages={this.state.totalPages}
+              currentPage={this.state.currentPage}
+              handlePaginationChange={this.handlePaginationChange} />/>
           </Container> : null}
       </div>
     );
+  }
+
+  handlePaginationChange = (e, data) => {
+    axios.get(`https://api.github.com/search/users?q=${this.state.term}&page=${data.activePage}&per_page=${this.state.pageSize}`)
+      .then(
+        (res) => {
+          console.log('response', res)
+          this.setState({
+            searchResult: [...res.data.items],
+            currentPage: data.activePage
+          })
+        }
+      )
+      .catch(
+        (error) => console.log('error in loading page data:', error)
+      )
   }
 
   sortUsersByNameAZ = () => {

@@ -8,15 +8,19 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <div>Total Results: {this.props.totalCount}</div>
         <MainContent
           searchResult={this.props.searchResult}
           totalCount={this.props.totalCount}
           totalPages={this.props.totalPages} />
         <Container text>
           <br /><br />
-          <MyPagination />
+          <MyPagination
+            handlePaginationChange={this.props.handlePaginationChange}
+            totalPages={this.props.totalPages}
+            currentPage={this.props.currentPage} />
         </Container>
       </div>
-    );
+    )
   }
 }
