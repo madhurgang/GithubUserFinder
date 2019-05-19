@@ -8,7 +8,9 @@ import axios from 'axios'
 class App extends React.Component {
   state = {
     term: '',
-    searchResult: ''
+    searchResult: '',
+    totalCount: 0,
+    totalPages: 0
   }
 
   handleSearchChange = (e) => {
@@ -39,7 +41,11 @@ class App extends React.Component {
         <Header
           term={this.state.term}
           handleSearchChange={this.handleSearchChange}
-          handleSearchSubmit={this.handleSearchSubmit} />
+          handleSearchSubmit={this.handleSearchSubmit}
+          sortUsersByNameAZ={this.sortUsersByNameAZ}
+          sortUsersByNameZA={this.sortUsersByNameZA}
+          sortUsersByRankAZ={this.sortUsersByRankAZ}
+          sortUsersByRankZA={this.sortUsersByRankZA} />
         {this.state.searchResult.length > 0 ?
           <Container>
             <Dashboard
@@ -49,6 +55,95 @@ class App extends React.Component {
           </Container> : null}
       </div>
     );
+  }
+
+  sortUsersByNameAZ = () => {
+    // sort by name
+    const list = [...this.state.searchResult]
+    list.sort((a, b) => {
+      var nameA = a.login.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.login.toUpperCase(); // ignore upper and lowercase
+
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    });
+    this.setState({
+      searchResult: list
+    })
+  }
+
+  sortUsersByNameZA = () => {
+    const list = [...this.state.searchResult]
+    // sort by name
+    list.sort((a, b) => {
+      var nameA = a.login.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.login.toUpperCase(); // ignore upper and lowercase
+
+      if (nameB < nameA) {
+        return -1;
+      }
+      if (nameB > nameA) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+    this.setState({
+      searchResult: list
+    })
+  }
+
+  sortUsersByRankAZ = () => {
+    const list = [...this.state.searchResult]
+    // sort by score
+
+    list.sort((a, b) => {
+      var scoreA = parseInt(a.score);
+      var scoreB = parseInt(b.score);
+
+      if (scoreA < scoreB) {
+        return -1;
+      }
+      if (scoreA > scoreB) {
+        return 1;
+      }
+      // scores must be equal
+      return 0;
+    });
+    console.log(list)
+    this.setState({
+      searchResult: list
+    })
+  }
+
+  sortUsersByRankZA = () => {
+    const list = [...this.state.searchResult]
+    // sort by score
+
+    list.sort((a, b) => {
+      var scoreA = parseInt(a.score);
+      var scoreB = parseInt(b.score);
+
+      if (scoreB < scoreA) {
+        return -1;
+      }
+      if (scoreB > scoreA) {
+        return 1;
+      }
+      // scores must be equal
+      return 0;
+    });
+    console.log(list)
+    this.setState({
+      searchResult: list
+    })
   }
 }
 
