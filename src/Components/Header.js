@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Input, Select, Container } from 'semantic-ui-react';
+import { Menu, Input, Select, Container, Form } from 'semantic-ui-react';
 export default class Header extends React.Component {
 
   state = {
@@ -11,10 +11,7 @@ export default class Header extends React.Component {
     ]
   }
 
-
   render() {
-
-
     return (
       <Menu stackable borderless inverted color='blue'>
         <Container text>
@@ -25,7 +22,15 @@ export default class Header extends React.Component {
           </Menu.Menu>
           <Menu.Menu position='right'>
             <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
+              <Form onSubmit={(e) => this.props.handleSearchSubmit(e)}>
+                <Input
+                  icon='search'
+                  placeholder='Search...'
+                  value={this.props.term}
+                  onChange={(e) => this.props.handleSearchChange(e)}
+                />
+              </Form>
+
             </Menu.Item>
           </Menu.Menu>
         </Container>
