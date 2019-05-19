@@ -1,66 +1,72 @@
 import React from 'react'
 import { Item, Button, Table } from 'semantic-ui-react';
+import axios from 'axios'
 
 export default class GitUserCard extends React.Component {
   state = {
-    show: false
+    show: false,
+    repos: []
   }
 
   toggleShow = () => {
-    this.setState({
-      show: !this.state.show
-    }, () => this.callApi())
+    axios.get(`https://api.github.com/users/${this.props.item.login}/repos`)
+      .then(
+        (res) => {
+          console.log('response ', res)
+          this.setState({
+            repos: res.data,
+            show: !this.state.show
+          })
+        })
+      .catch(
+        (error) => console.log('error in fetch user Repos:', error)
+      )
   }
+
 
   callApi = () => {
     // call api here
   }
 
   render() {
+    const { item } = this.props
     return (
-      <Item divided>
-        <Item.Image size='tiny' src='http://placehold.it/100' />
+      <Item>
+        <Item.Image size='tiny' src={item.avatar_url} />
         <Item.Content>
-          <Item.Header as='a'>Varun Srivastave</Item.Header>
-          <Item.Meta>Profile URL: <a href="#">http://abc.com</a></Item.Meta>
+          <Item.Header as='a'>{item.login}</Item.Header>
+          <Item.Meta>Profile URL: <a href={item.html_url} target='_blank' rel='noopener noreferrer'>{item.html_url}</a></Item.Meta>
           <Item.Extra>
-            <Button onClick={this.toggleShow} primary basic floated='right'>Details</Button>
+            <Button onClick={this.toggleShow} primary basic floated='right'>{this.state.show ? 'Collapse' : 'Details'}</Button>
             <br />
             <br />
-            {this.state.show &&
+            {this.state.show && (this.state.repos.length > 0) &&
               <Table basic>
                 <Table.Header>
                   <Table.Row>
-                    <Table.HeaderCell>Attribute</Table.HeaderCell>
-                    <Table.HeaderCell>Value</Table.HeaderCell>
+                    <Table.HeaderCell>Repository Name</Table.HeaderCell>
+                    <Table.HeaderCell>Language</Table.HeaderCell>
+                    <Table.HeaderCell>Followers</Table.HeaderCell>
+                    <Table.HeaderCell>Open Issues</Table.HeaderCell>
+                    <Table.HeaderCell>Forks</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>Repository Name</Table.Cell>
-                    <Table.Cell>MadurG</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Language</Table.Cell>
-                    <Table.Cell>C++</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Open Issues</Table.Cell>
-                    <Table.Cell>12</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Followers</Table.Cell>
-                    <Table.Cell>12</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Forks</Table.Cell>
-                    <Table.Cell>12</Table.Cell>
-                  </Table.Row>
+                  {this.state.repos.map((repo, i) => {
+                    return (
+                      <Table.Row key={i}>
+                        <Table.Cell>{repo.name}</Table.Cell>
+                        <Table.Cell>{repo.language}</Table.Cell>
+                        <Table.Cell>{repo.watchers}</Table.Cell>
+                        <Table.Cell>{repo.open_issues}</Table.Cell>
+                        <Table.Cell>{repo.forks}</Table.Cell>
+                      </Table.Row>)
+                  }
+                  )}
                 </Table.Body>
               </Table>
             }
-
           </Item.Extra>
         </Item.Content>
       </Item>

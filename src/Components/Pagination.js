@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Grid, Pagination} from 'semantic-ui-react'
+import { Grid, Pagination } from 'semantic-ui-react'
 
 export default class MyPagination extends Component {
   state = {
     activePage: 5,
     boundaryRange: 1,
     siblingRange: 1,
-    showEllipsis: false,
+    showEllipsis: true,
     showFirstAndLastNav: false,
     showPreviousAndNextNav: false,
     totalPages: 50,
