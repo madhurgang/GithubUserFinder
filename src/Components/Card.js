@@ -26,12 +26,15 @@ export default class GitUserCard extends React.Component {
   render() {
     const { item } = this.props
     return (
-
-      <Item>
-        <Item.Image avatar size='tiny' src={item.avatar_url} />
-        <Item.Content>
-          <Item.Header as='a'>{item.login}</Item.Header>
-          <Item.Meta>Profile URL: <a href={item.html_url} target='_blank' rel='noopener noreferrer'>{item.html_url}</a></Item.Meta>
+      <React.Fragment>
+        <Item>
+          <Item.Image avatar size='tiny' src={item.avatar_url} />
+          <Item.Content>
+            <Item.Header as='a'>{item.login}</Item.Header>
+            <Item.Meta>Profile URL: <a href={item.html_url} target='_blank' rel='noopener noreferrer'>{item.html_url}</a></Item.Meta>
+          </Item.Content>
+        </Item>
+        <Item>
           <Item.Extra>
             <Button onClick={this.toggleShow} primary basic floated='right'>{this.state.show ? 'Collapse' : 'Details'}</Button>
             <br />
@@ -47,7 +50,6 @@ export default class GitUserCard extends React.Component {
                     <Table.HeaderCell>Forks</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
-
                 <Table.Body>
                   {this.state.repos.map((repo, i) => {
                     return (
@@ -64,8 +66,9 @@ export default class GitUserCard extends React.Component {
               </Table>
             }
           </Item.Extra>
-        </Item.Content>
-      </Item>
+        </Item>
+        <hr />
+      </React.Fragment>
     );
   }
 
