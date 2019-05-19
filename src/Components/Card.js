@@ -23,16 +23,12 @@ export default class GitUserCard extends React.Component {
       )
   }
 
-
-  callApi = () => {
-    // call api here
-  }
-
   render() {
     const { item } = this.props
     return (
+
       <Item>
-        <Item.Image size='tiny' src={item.avatar_url} />
+        <Item.Image avatar size='tiny' src={item.avatar_url} />
         <Item.Content>
           <Item.Header as='a'>{item.login}</Item.Header>
           <Item.Meta>Profile URL: <a href={item.html_url} target='_blank' rel='noopener noreferrer'>{item.html_url}</a></Item.Meta>
@@ -41,7 +37,7 @@ export default class GitUserCard extends React.Component {
             <br />
             <br />
             {this.state.show && (this.state.repos.length > 0) &&
-              <Table basic>
+              <Table basic striped collapsing >
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Repository Name</Table.HeaderCell>

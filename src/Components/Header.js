@@ -1,20 +1,27 @@
 import React from 'react'
-import { Menu, Input, Dropdown, Icon, Container, Form } from 'semantic-ui-react';
+import { Menu, Input, Select, Container, Form } from 'semantic-ui-react';
 
 export default class Header extends React.Component {
+
+  state = {
+    options: [
+      { text: 'Name (A-Z)', key: 'sortAZ', value: 'sortAZ' },
+      { text: 'Name (Z-A)', key: 'sortZA', value: 'sortZA' },
+      { text: 'Rank Asc', key: 'rankAsc', value: 'rankAsc' },
+      { text: 'Rank Desc', key: 'rankDesc', value: 'rankDesc' },
+    ]
+  }
 
   render() {
     return (
       <Menu stackable borderless inverted color='blue'>
         <Container text>
-          <Dropdown style={{ marginLeft: 150, width: 220 }} item simple text='Sort By Name'>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => this.props.sortUsersByNameAZ()}>Name (A-Z)</Dropdown.Item>
-              <Dropdown.Item onClick={() => this.props.sortUsersByNameZA()}>Name (Z-A)</Dropdown.Item>
-              <Dropdown.Item onClick={() => this.props.sortUsersByRankAZ()}>Rank <Icon name='arrow up' /></Dropdown.Item>
-              <Dropdown.Item onClick={() => this.props.sortUsersByRankZA()}>Rank <Icon name='arrow down' /></Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Menu.Menu>
+            <Menu.Item>
+              <Select placeholder='Sort Options' options={this.state.options}
+                onChange={(e, data) => this.props.handleSearchSort(e, data)} />
+            </Menu.Item>
+          </Menu.Menu>
           <Menu.Menu position='right'>
             <Menu.Item>
               <Form onSubmit={(e) => this.props.handleSearchSubmit(e)}>

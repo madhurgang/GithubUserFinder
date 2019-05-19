@@ -18,24 +18,25 @@ export default class MyPagination extends Component {
     else {
       const { boundaryRange, siblingRange, showEllipsis, showFirstAndLastNav, showPreviousAndNextNav } = this.state
       return (
-        <Grid columns={1}>
-          <Grid.Column>
-            <Pagination
-              activePage={this.props.currentPage}
-              boundaryRange={boundaryRange}
-              onPageChange={(e, data) => this.props.handlePaginationChange(e, data)}
-              size='mini'
-              siblingRange={siblingRange}
-              totalPages={this.props.totalPages}
-              // Heads up! All items are powered by shorthands, if you want to hide one of them, just pass `null` as value
-              ellipsisItem={showEllipsis ? undefined : null}
-              firstItem={showFirstAndLastNav ? undefined : null}
-              lastItem={showFirstAndLastNav ? undefined : null}
-              prevItem={showPreviousAndNextNav ? undefined : null}
-              nextItem={showPreviousAndNextNav ? undefined : null}
-            />
-          </Grid.Column>
-        </Grid>
+        <div style={{ float: 'right' }}>
+          <Grid columns={1}>
+            <Grid.Column>
+              <Pagination
+                activePage={this.props.currentPage}
+                boundaryRange={boundaryRange}
+                onPageChange={(e, data) => this.props.handlePaginationChange(e, data)}
+                size='mini'
+                siblingRange={siblingRange}
+                totalPages={this.props.totalPages}
+                ellipsisItem={showEllipsis ? undefined : null}
+                firstItem={showFirstAndLastNav ? undefined : null}
+                lastItem={showFirstAndLastNav ? undefined : null}
+                prevItem={showPreviousAndNextNav ? undefined : null}
+                nextItem={showPreviousAndNextNav ? undefined : null}
+              />
+            </Grid.Column>
+          </Grid>
+        </div>
       )
     }
   }
