@@ -11,13 +11,15 @@ export default class Dashboard extends React.Component {
         <MainContent
           searchResult={this.props.searchResult}
           totalCount={this.props.totalCount}
-          totalPages={this.props.totalPages} />
+          totalPages={this.props.totalPages}
+        />
         <Container text>
           <br />
           <MyPagination
             handlePaginationChange={this.props.handlePaginationChange}
             totalPages={this.props.totalPages}
-            currentPage={this.props.currentPage} />
+            currentPage={this.props.currentPage}
+          />
         </Container>
       </div>
     );

@@ -5,23 +5,32 @@ import axios from 'axios'
 export default class GitUserCard extends React.Component {
   state = {
     show: false,
-    repos: []
+    repos: [],
+    apiCalled: false
   }
 
   toggleShow = () => {
-    axios.get(`https://api.github.com/users/${this.props.item.login}/repos`)
-      .then(
-        (res) => {
-          console.log('response ', res)
-          this.setState({
-            repos: res.data,
-            show: !this.state.show
+    if (!this.state.apiCalled) {
+      axios.get(`https://api.github.com/users/${this.props.item.login}/repos`)
+        .then(
+          (res) => {
+            console.log('response ', res)
+            this.setState({
+              repos: res.data,
+              show: !this.state.show,
+              apiCalled: true
+            })
           })
-        })
-      .catch(
-        (error) => console.log('error in fetch user Repos:', error)
-      )
+        .catch(
+          (error) => console.log('error in fetch user Repos:', error)
+        )
+    } else {
+      this.setState({
+        show: !this.state.show
+      })
+    }
   }
+
 
   render() {
     const { item } = this.props
@@ -40,7 +49,7 @@ export default class GitUserCard extends React.Component {
             <br />
             <br />
             {this.state.show && (this.state.repos.length > 0) &&
-              <Table basic striped collapsing >
+              <Table basic striped collapsing>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Repository Name</Table.HeaderCell>
@@ -59,9 +68,9 @@ export default class GitUserCard extends React.Component {
                         <Table.Cell>{repo.watchers}</Table.Cell>
                         <Table.Cell>{repo.open_issues}</Table.Cell>
                         <Table.Cell>{repo.forks}</Table.Cell>
-                      </Table.Row>)
-                  }
-                  )}
+                      </Table.Row>
+                    )
+                  })}
                 </Table.Body>
               </Table>
             }
